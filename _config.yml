@@ -15,7 +15,7 @@ description: > # this means to ignore newlines until "baseurl:"
   <br><br>
   Mình thích Lập trình, yêu làm Game và Thiết kế mấy thứ linh tinh nữa.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://yourdomain.com" # the base hostname & protocol for your site
+url: "http://luuthevinh.github.io" # the base hostname & protocol for your site
 twitter_username: thevinh14
 github_username:  luuthevinh
 facebook_username: eric1495
