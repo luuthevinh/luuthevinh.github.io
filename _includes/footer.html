@@ -1,0 +1,67 @@
+<footer class="site-footer">
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+
+
+      <div class="footer-col footer-col-3">
+        <img class="blog-avatar-big" src="{{ "/assets/images/vinh-ava-300.png" | prepend: site.baseurl }}"/>
+        <p>{{ site.description }}</p>
+      </div>
+
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Liên hệ</li>
+          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+        
+        </ul>
+
+        <ul class="social-media-list">
+          <li>Social</li>
+          {% if site.github_username %}
+          <li>
+            {% include icon-github.html username=site.github_username %}
+          </li>
+          {% endif %}
+
+          {% if site.twitter_username %}
+          <li>
+            {% include icon-twitter.html username=site.twitter_username %}
+          </li>
+          {% endif %}
+
+          {% if site.facebook_username %}
+          <li>
+            {% include icon-facebook.html username=site.facebook_username %}
+          </li>
+          {% endif %}
+
+          {% if site.instagram_username %}
+          <li>
+            {% include icon-instagram.html username=site.instagram_username %}
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+
+        <ul class="category-list">
+        Categories
+        {% for category in site.data.categories %}
+          <li><a href="/categories/{{ category.slug }}">{{ category.name }}</a>
+        {% endfor %}
+        </ul>
+
+        <ul class="tag-list">
+        Tags
+        {% for tag in site.data.tags %}
+          <li><a href="/tags/{{ tag.slug }}">{{ tag.name }}</a>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+</footer>

@@ -1,0 +1,10 @@
+---
+layout: page
+title: Tags
+exclude: true
+---
+<ul class="tag-list-page">
+{% for tag in site.data.tags %}
+  <li><a href="/tags/{{ tag.slug }}">{{ tag.name }}</a>
+{% endfor %}
+</ul>
