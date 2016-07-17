@@ -27,10 +27,12 @@ markdown: kramdown
 
 gems: ["jekyll-sitemap"]
 
-comments :
-  provider : facebook
-  facebook :
-    appid : 1021504654629283
-    num_posts: 5
-    width: 580
-    colorscheme: light
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Vinh"
+      comments: yes

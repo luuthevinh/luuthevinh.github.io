@@ -1,10 +1,8 @@
 ---
-layout: post
 title: "Sử dụng bit flags để lưu giá trị"
 date: 2016-07-17 14:00:00 +0700
 categories: bai-viet
 tags: [bit, bit-flags]
-author: Vinh
 ---
 
 # Bit flags là gì?

@@ -345,7 +345,7 @@ header {
     color: #fff; }
 
 .post-tags-list {
-  marign-left: 0px !important; }
+  margin: 0px !important; }
   .post-tags-list li {
     display: inline-block;
     margin: 10px 5px;
