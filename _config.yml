@@ -11,11 +11,9 @@ permalink: /:year/:month/:title
 title: Vinh's Blog
 email: luuthevinh7@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Xin chào, mình tên là Lưu Thế Vinh.
-  <br><br>
-  Mình thích Lập trình, yêu làm Game và Thiết kế mấy thứ linh tinh nữa.
+  Xin chào, mình tên là Lưu Thế Vinh. Mình thích Lập trình, yêu làm Game và cũng tập tành Thiết kế mấy thứ linh tinh nữa.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://luuthevinh.github.io" # the base hostname & protocol for your site
+url: "http://luuthevinh.me" # the base hostname & protocol for your site
 twitter_username: thevinh14
 github_username:  luuthevinh
 facebook_username: eric1495
@@ -25,7 +23,9 @@ blog_avatar: /assets/images/vinh-ava-300.png
 # Build settings
 markdown: kramdown
 
-gems: ["jekyll-sitemap"]
+gems: 
+  - jekyll-sitemap
+  - jekyll-seo-tag
 
 defaults:
   -
@@ -36,3 +36,8 @@ defaults:
       layout: "post"
       author: "Vinh"
       comments: yes
+
+facebook:
+  app_id: 1021504654629283
+  publisher: 100001840703474
+  admins: 100001840703474

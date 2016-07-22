@@ -3,6 +3,7 @@ title: "Sử dụng bit flags để lưu giá trị"
 date: 2016-07-17 14:00:00 +0700
 categories: bai-viet
 tags: [bit, bit-flags]
+description: "Bit flags là gì? là cách chúng ta sử dụng thứ tự các bit của biến được lưu trong bộ nhớ để quy định một loại giá trị"
 ---
 
 # Bit flags là gì?
