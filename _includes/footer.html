@@ -53,10 +53,11 @@
         {% endfor %}
         </ul>
 
-        <ul class="tag-list">
         Tags
+        <ul class="tag-list">
+        
         {% for tag in site.data.tags %}
-          <li><a href="/tags/{{ tag.slug }}">{{ tag.name }}</a>
+          <li><a href="/tags/{{ tag.slug }}">{{ tag.name }}</a></li>
         {% endfor %}
         </ul>
       </div>

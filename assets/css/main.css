@@ -200,6 +200,8 @@ header {
       .site-nav .trigger {
         clear: both;
         display: none; }
+        .trigger .separate {
+          display: none; }
       .site-nav:hover .trigger {
         display: block;
         padding-bottom: 5px; }
@@ -324,7 +326,14 @@ header {
   margin-bottom: 20px; }
 
 .category-list, .tag-list {
-  list-style: none; }
+  list-style: none; 
+  margin-left: 0px; 
+}
+
+.tag-list li {
+  float: left;
+  margin-right: 8px;
+}
 
 .category-list-page li {
   display: inline-block;
@@ -495,3 +504,7 @@ header {
     color: #008080; }
   .highlight .il {
     color: #099; }
+
+.post-thumbnail {
+  border: 1px solid #e8e8e8;
+}
