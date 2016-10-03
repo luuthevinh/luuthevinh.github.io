@@ -15,7 +15,7 @@ Trong bài này mình sẽ hướng dẫn các bạn cách ghép hình bằng Ca
 
 Ý tưởng cơ bản là mình vẽ lần lượt hai hình lên canvas, thêm chức năng di chuyển ảnh sau đó mình lưu canvas đó xuống là xong. Rất đơn giản phải không?
 
-Đầu tiên trong file html, các bạn thêm hai thẻ `<canvas>` và `<img>` như sau:
+Đầu tiên trong file html, các bạn thêm các thẻ `<canvas>`, `<input>` và `<img>` như sau:
 
 ```html
 <canvas id="canvas">Xin lỗi, trình duyệt bạn không hỗ trợ.</canvas>
@@ -23,6 +23,10 @@ Trong bài này mình sẽ hướng dẫn các bạn cách ghép hình bằng Ca
 
 <a id="selectImageBtn" onclick="selectFile()" role="button">Chọn hình</a>
 <a id="downloadBtn" role="button">Tải về</a></pre>
+
+<!--Thanh thay đổi kích thước, ở đây mình cho giá trị scale từ 1 -> 2-->
+<input id="scaleBar" type="range" min="1" max="2" step="0.01"/>
+<p>Kích thước: <span id="scaleValue">1</span></p>
 ```
 
 Trong đó,
@@ -30,6 +34,7 @@ Trong đó,
   * Thẻ canvas để mình sử dụng vẽ hình.
   * Thẻ img dùng để chứa hình mà mình tải lên.
   * 2 nút chọn hình và tải hình về.
+  * Thẻ input dùng để nhận giá trị scale hình.
 
 Tiếp theo, các bạn tạo file js để code một số xử lý hình ảnh.
 
@@ -39,6 +44,9 @@ var img1 = document.getElementById("source");
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 
+// mình lấy thanh input scale
+var scaleBar = document.getElementById("scaleBar");
+
 // gán kích thước mặc định cho canvas
 var canvasWidth = canvas.width = 500;
 var canvasHeight = canvas.height = 500;
@@ -46,21 +54,62 @@ var canvasHeight = canvas.height = 500;
 // cạnh nhỏ nhất
 var minEdge = 0;
 
+// kích thước với scale hiện tại
+var sWidth = canvasWidth;
+var sHeight = canvasHeight;
+
 // tạo đối tượng khung hình để ghép
 var frame = new Image;
 frame.src = "images/avatar_frame.png";
 
 // mình gán sự kiện onload cho hình mình tải lên.
 img1.onload = function() {
-    // trong đây, mình tìm cạnh ngắn của hình
-    minEdge = Math.min(img1.width, img1.height);
-
-    // xóa và vẽ lại hình, frame lên canvas, 
-    // theo tỉ lệ với cạnh ngắn (cho hình scale vừa với khung canvas)
-    context.clearRect(0,0, canvasWidth, canvasHeight);
-    context.drawImage(img1, 0, 0, minEdge, minEdge, 0, 0, canvasWidth, canvasHeight);
-    context.drawImage(frame, 0, 0, frame.width, frame.height, 0, 0, canvasWidth, canvasHeight);
+	// tìm cạnh ngắn để fit với frame
+	minEdge = Math.min(img1.width, img1.height)
+	
+	// tính tỉ lệ scale với frame hình
+	minScale = canvasWidth / minEdge;
+	curScale = minScale;
+	
+	// gán giá trị mặc định
+	scaleBar.value = "1";
+	
+	// mình cho hình scale theo tỉ lệ tính được
+	sWidth = canvasWidth / curScale;
+	sHeight = canvasHeight / curScale;
+	
+	// cuối cùng là vẽ hình lên canvas
+	drawCurrentImage();
 }
+```
+
+```js
+// hàm drawCurrentImage()
+function drawCurrentImage()
+{
+	// giới hạn vị trí vẽ hình
+	if(imagePosX < 0)
+	{
+		imagePosX = 0;
+	}
+	else if(imagePosX > img1.width - sWidth)
+	{
+		imagePosX = img1.width - sWidth;
+	}
+
+	if(imagePosY < 0)
+	{
+		imagePosY = 0;
+	}
+	else if(imagePosY > img1.height - sHeight)
+	{
+		imagePosY = img1.height - sHeight;
+	}
+  
+	// vẽ frame và hình lên canvas
+	context.drawImage(img1, imagePosX, imagePosY, sWidth, sHeight, 0, 0, canvasWidth, canvasHeight);
+	context.drawImage(frame, 0, 0, frame.width, frame.height, 0, 0, canvasWidth, canvasHeight);
+};
 ```
 
 Các bạn có thể xem hàm [drawImage](http://www.w3schools.com/tags/canvas_drawimage.asp){:target="_blank"}.
@@ -116,7 +165,7 @@ document.getElementById('downloadBtn').addEventListener('click', function() {
 }, false);
 ```
 
-# Di chuyển hình
+# Di chuyển và scale hình
 
 Cuối cùng mình sẽ thêm chức năng **di chuyển hình** nền mình tải lên.
 
@@ -127,12 +176,18 @@ Cuối cùng mình sẽ thêm chức năng **di chuyển hình** nền mình t�
 var canvasOffset = $("#canvas").offset();
 var offsetX = canvasOffset.left;
 var offsetY = canvasOffset.top;
+
 // biến cờ xem có đang kéo ko
 var isDragging = false;
+
 // vị trí hình trước đó
 var preX, preY;
 var imagePosX = 0;
 var imagePosY = 0;
+
+// biến scale
+var curScale = 1;
+var minScale = 1;
 
 // sự kiện mouse down
 function handleMouseDown(e){
@@ -177,36 +232,17 @@ function handleMouseMove(e) {
   canMouseX = parseInt(e.clientX - offsetX);
   canMouseY = parseInt(e.clientY - offsetY);
 
-  // nếu đang kéo hình thì mình xóa canvas và vẽ lại vị trí mới
+	// nếu đang kéo hình thì mình xóa canvas và vẽ lại vị trí mới
 	if(isDragging) {
 		context.clearRect(0,0,canvasWidth,canvasHeight);
 
 		// vị trí của hình = độ thay đổi vị trí của chuột (vị trí hiện tại - vị trí trước đó)
-		imagePosX -= canMouseX - preX;
-		imagePosY -= canMouseY - preY;
+		// và mình chia cho tỉ lệ scale hiện tại
+		imagePosX -= (canMouseX - preX) / curScale;
+		imagePosY -= (canMouseY - preY) / curScale;
 
-		// chặn lại khi ra khỏi biên
-		if(imagePosX < 0)
-		{
-			imagePosX = 0;
-		}
-		else if(imagePosX > img1.width - minEdge)
-		{
-			imagePosX = img1.width - minEdge;
-		}
-
-		if(imagePosY < 0)
-		{
-			imagePosY = 0;
-		}
-		else if(imagePosY > img1.height - minEdge)
-		{
-			imagePosY = img1.height - minEdge;
-		}
-
-		// vẽ lại hình và khung theo vị trí mới
-		context.drawImage(img1, imagePosX, imagePosY, minEdge, minEdge, 0, 0, canvasWidth, canvasHeight);
-		context.drawImage(frame, 0, 0, frame.width, frame.height, 0, 0, canvasWidth, canvasHeight);
+		// vẽ lại hình
+		drawCurrentImage();
 	}
 
 	// lưu vị trí hiện tại lại
@@ -221,12 +257,37 @@ $("#canvas").mouseup(function(e){handleMouseUp(e);});
 $("#canvas").mouseout(function(e){handleMouseOut(e);});
 ```
 
+# Thay đổi giá trị scale
+```js
+scaleBar.oninput = function() {
+	
+	// tính giá trị scale, minScale là tỉ lệ tối thiểu mình scale để vừa với khung ảnh
+	// sau đó nhân với giá trị của thanh scale
+	curScale = minScale * scaleBar.value;
+	
+	// tính lại kích thước theo scale
+	sWidth = canvasWidth / curScale;
+	sHeight = canvasHeight / curScale;
+	
+	// vẽ hình
+	drawCurrentImage();
+	
+	// gán giá trị hiển thị trên web
+	var scaleValue = document.getElementById("scaleValue");
+	scaleValue.innerHTML = scaleBar.value;
+}
+```
+
 # Tổng kết
 
 Vậy là xong các chức năng cơ bản của việc ghép khung vào hình, các bạn có thể phát triển thêm như là xoay hình, phóng to thu nhỏ, chọn frame... Còn lại là các thứ như là css lại giao diện theo ý các bạn thôi.
 
-<a href="https://github.com/LuuTheVinh/up-2016" target="_blank">Full Source code của project.</a>
+<a href="https://github.com/luuthevinh/up-2016" target="_blank">Full Source code của project.</a>
 
 Bài viết này mình cũng đang tìm hiểu về Javascript, nên nếu có gì sai sót các bạn có thể góp ý thêm nha. Bạn nào có sử dụng lại nhớ báo mình cho mình biết nhé.
   
 Hẹn gặp lại các bạn.
+
+# Cập nhật
+
+* 3/10/2016: cập nhật scale hình ảnh 
