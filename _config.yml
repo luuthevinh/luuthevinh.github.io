@@ -13,7 +13,7 @@ email: luuthevinh7@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   Xin chào, mình tên là Lưu Thế Vinh. Mình thích Lập trình, làm Game và cũng tập tành Thiết kế mấy thứ linh tinh.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://luuthevinh.me" # the base hostname & protocol for your site
+url: "https://luuthevinh.me" # the base hostname & protocol for your site
 twitter_username: thevinh14
 github_username:  luuthevinh
 facebook_username: eric14
@@ -41,3 +41,8 @@ facebook:
   app_id: 1021504654629283
   publisher: 100001840703474
   admins: 100001840703474
+  
+social:
+  name: Vinh LuuThe
+  links:
+    - https://www.facebook.com/eric14
