@@ -5,11 +5,11 @@ layout: page
   <p>{{ page.content }}</p>
 {% endunless %}
 
-{% unless site.categories.[page.category] | size > 0 %}
+{% unless site.categories[page.category] or size > 0 %}
   <p>Không có bài viết nào trong mục này.</p>
 {% endunless %}
 
-{% for post in site.categories.[page.category] %}
+{% for post in site.categories[page.category] %}
 <div class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
         <h3 class="post-title">            

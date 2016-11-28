@@ -11,7 +11,7 @@ permalink: /:year/:month/:title
 title: Vinh's Blog
 email: luuthevinh7@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Xin chào, mình tên là Lưu Thế Vinh. Mình thích Lập trình, yêu làm Game và cũng tập tành Thiết kế mấy thứ linh tinh nữa.
+  Xin chào, mình tên là Lưu Thế Vinh. Mình thích Lập trình, làm Game và cũng tập tành Thiết kế mấy thứ linh tinh.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://luuthevinh.me" # the base hostname & protocol for your site
 twitter_username: thevinh14

@@ -6,11 +6,11 @@ description: "Đây là danh sách các tag của bài viết trên blog này."
   <p>{{ page.content }}</p>
 {% endunless %}
 
-{% unless site.tags.[page.tag] | size > 0 %}
+{% unless site.tags[page.tag] or size > 0 %}
   <p>Không có bài viết nào trong mục này.</p>
 {% endunless %}
 
-{% for post in site.tags.[page.tag] %}
+{% for post in site.tags[page.tag] %}
 <div class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
         <h3 class="post-title">            
