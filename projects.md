@@ -3,6 +3,9 @@ layout: page
 title: Projects
 permalink: /projects/
 weight: 1
+sitemap: false
+metatags: noindex, follow
+description: Các project hiện tại của Vinh
 ---
 
 Ở đây là các project của mình:

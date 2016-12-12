@@ -3,6 +3,9 @@ layout: page
 title: About
 permalink: /about/
 weight: 5
+sitemap: false
+metatags: noindex, follow
+description: Thông tin về Vinh
 ---
 
 Về mình hả?

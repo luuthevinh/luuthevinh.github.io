@@ -1,7 +1,9 @@
 ---
 layout: page
 title: Privacy Policy
-exclude: true;
+exclude: true
+sitemap: false
+metatags: noindex, nofollow
 ---
 
 # Privacy Policy
